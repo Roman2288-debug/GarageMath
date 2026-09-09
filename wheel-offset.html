@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SNZQW6YHW9"></script>
 <script>
@@ -9,30 +8,10 @@
   gtag('config', 'G-SNZQW6YHW9');
 </script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wheel Offset Calculator | GarageMath</title><meta name="description" content="Compare wheel width and offset changes for inner clearance and outer poke.">
-<link rel="stylesheet" href="style.css"></head><body>
-<header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
-<main class="tool-shell"><div class="container">
-<div class="tool-head"><div class="kicker">FITMENT TOOL</div><h1>Wheel Offset Calculator</h1><p>Compare two wheel setups and estimate how much inner clearance and outer position change.</p></div>
-<div class="calc"><div class="panel"><h2>Wheel dimensions</h2>
-<div class="field"><label>Current width (in)</label><input id="w1" type="number" value="8" step=".5"></div>
-<div class="field"><label>Current offset (mm)</label><input id="o1" type="number" value="35"></div>
-<div class="field"><label>New width (in)</label><input id="w2" type="number" value="9" step=".5"></div>
-<div class="field"><label>New offset (mm)</label><input id="o2" type="number" value="30"></div>
-<button onclick="calcWheel()">Compare wheels</button></div><div class="panel"><h2>Results</h2><div id="wheelResults"></div></div></div>
-<div class="content"><h2>What offset changes</h2><p>Wheel offset is the distance between the wheel centerline and the mounting surface. Changing width and offset together changes both suspension-side clearance and how far the wheel sits toward the fender.</p><p class="note">This is a geometry estimate only. Actual fitment also depends on tire width, suspension, brake clearance and bodywork.</p></div></div></main>
-<footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div></footer>
-<script src="common.js"></script><script>
-function calcWheel(){
- const a=+w1.value*25.4,b=+w2.value*25.4,oa=+o1.value,ob=+o2.value,el=document.getElementById('wheelResults');
- if(a<=0||b<=0){el.innerHTML='<p class="note">Enter valid wheel widths.</p>';return}
- const innerOld=a/2+oa, innerNew=b/2+ob, outerOld=a/2-oa, outerNew=b/2-ob;
- const clearance=innerOld-innerNew, poke=outerNew-outerOld;
- const ctext=clearance>=0?`${num(clearance,1)} mm more inner clearance`:`${num(Math.abs(clearance),1)} mm less inner clearance`;
- const ptext=poke>=0?`${num(poke,1)} mm more outer poke`:`${num(Math.abs(poke),1)} mm more tucked in`;
- el.innerHTML=`<div class="result"><span>Suspension-side change</span><strong>${ctext}</strong></div>
- <div class="result"><span>Fender-side change</span><strong>${ptext}</strong></div>
- <div class="result"><span>Width change</span><strong>${num((b-a)/25.4,2)} in</strong></div>`;
-} calcWheel();
-</script><script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-</body></html>
+<title>Wheel Offset Calculator | GarageMath</title>
+<meta name="description" content="Compare wheel width and offset changes for inner clearance and outer poke.">
+<link rel="canonical" href="https://garagemath.com/wheel-offset.html">
+<meta property="og:title" content="Wheel Offset Calculator | GarageMath"><meta property="og:description" content="Compare wheel width and offset changes for inner clearance and outer poke."><meta property="og:type" content="website"><meta property="og:url" content="https://garagemath.com/wheel-offset.html">
+<link rel="stylesheet" href="style.css"></head><body><header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="guides.html">Guides</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header><main class="tool-shell"><div class="container"><div class="tool-head"><div class="kicker">FITMENT TOOL</div><h1>Wheel Offset Calculator</h1><p>Compare two wheel setups and estimate how much suspension-side clearance and fender-side position change.</p></div><div class="calc"><div class="panel"><h2>Wheel dimensions</h2><div class="field"><label for="w1">Current width (in)</label><input id="w1" type="number" value="8" step=".5"></div><div class="field"><label for="o1">Current offset (mm)</label><input id="o1" type="number" value="35"></div><div class="field"><label for="w2">New width (in)</label><input id="w2" type="number" value="9" step=".5"></div><div class="field"><label for="o2">New offset (mm)</label><input id="o2" type="number" value="30"></div><button onclick="calcWheel()">Compare wheels</button></div><div class="panel"><h2>Results</h2><div id="wheelResults"><p class="note">Enter your numbers and calculate.</p></div></div></div><div class="content"><h2>What wheel offset changes</h2><p>Offset is the distance from the wheel centerline to the hub mounting face. Positive offset moves the wheel farther inward. Lower or negative offset generally moves it farther outward. Width and offset must be considered together.</p><h2>Inner clearance versus outer poke</h2><p>A wider wheel grows on both sides of its centerline. Changing offset then shifts that wider wheel inboard or outboard. GarageMath calculates both effects at the same time.</p><p class="warning">This is a geometry estimate, not a fitment guarantee. Tire section width, brake calipers, suspension travel, alignment and bodywork can all become the limiting factor.</p><div class="related"><a class="pill" href="wheel-offset-guide.html">Offset & backspacing guide</a><a class="pill" href="wheel-backspacing.html">Backspacing calculator</a><a class="pill" href="tire-size.html">Tire size</a></div></div></div></main><footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div></div></footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+<script src="common.js"></script><script>function calcWheel(){const a=+w1.value*25.4,b=+w2.value*25.4,oa=+o1.value,ob=+o2.value,el=document.getElementById('wheelResults');if(a<=0||b<=0){el.innerHTML='<p class="note">Enter valid wheel widths.</p>';return}const innerOld=a/2+oa,innerNew=b/2+ob,outerOld=a/2-oa,outerNew=b/2-ob,clearance=innerOld-innerNew,poke=outerNew-outerOld;const ctext=clearance>=0?`${num(clearance,1)} mm more inner clearance`:`${num(Math.abs(clearance),1)} mm less inner clearance`;const ptext=poke>=0?`${num(poke,1)} mm more outer poke`:`${num(Math.abs(poke),1)} mm more tucked in`;el.innerHTML=`<div class="result"><span>Suspension-side change</span><strong>${ctext}</strong></div><div class="result"><span>Fender-side change</span><strong>${ptext}</strong></div><div class="result"><span>Width change</span><strong>${num((b-a)/25.4,2)} in</strong></div>`;}calcWheel();</script></body></html>

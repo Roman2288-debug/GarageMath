@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SNZQW6YHW9"></script>
 <script>
@@ -9,25 +8,10 @@
   gtag('config', 'G-SNZQW6YHW9');
 </script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Power-to-Weight Calculator | GarageMath</title><meta name="description" content="Calculate pounds per horsepower and horsepower per ton.">
-<link rel="stylesheet" href="style.css"></head><body>
-<header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
-<main class="tool-shell"><div class="container">
-<div class="tool-head"><div class="kicker">PERFORMANCE TOOL</div><h1>Power-to-Weight Calculator</h1><p>Turn horsepower and vehicle weight into horsepower per ton and pounds per horsepower.</p></div>
-<div class="calc"><div class="panel"><h2>Vehicle numbers</h2>
-<div class="field"><label>Horsepower</label><input id="hp" type="number" value="400"></div>
-<div class="field"><label>Vehicle weight (lb)</label><input id="weight" type="number" value="3600"></div>
-<button onclick="calcHP()">Calculate ratio</button></div><div class="panel"><h2>Results</h2><div id="hpResults"></div></div></div>
-<div class="content"><h2>Reading the ratio</h2><p>Lower pounds-per-horsepower means each horsepower has less mass to move. Horsepower per US ton gives the same relationship from the opposite direction.</p></div></div></main>
-<footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div></footer>
-<script src="common.js"></script><script>
-function calcHP(){
- const h=+hp.value,w=+weight.value,el=document.getElementById('hpResults');
- if(h<=0||w<=0){el.innerHTML='<p class="note">Enter horsepower and weight above zero.</p>';return}
- const lbsPer=w/h, hpTon=h/(w/2000);
- el.innerHTML=`<div class="result"><span>Pounds per horsepower</span><strong>${num(lbsPer,2)} lb/hp</strong></div>
- <div class="result"><span>Horsepower per US ton</span><strong>${num(hpTon,1)} hp/ton</strong></div>
- <div class="result"><span>Horsepower per 1,000 lb</span><strong>${num(h/(w/1000),1)} hp</strong></div>`;
-} calcHP();
-</script><script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-</body></html>
+<title>Power-to-Weight Calculator | GarageMath</title>
+<meta name="description" content="Calculate pounds per horsepower, horsepower per ton and horsepower per 1,000 pounds.">
+<link rel="canonical" href="https://garagemath.com/hp-weight.html">
+<meta property="og:title" content="Power-to-Weight Calculator | GarageMath"><meta property="og:description" content="Calculate pounds per horsepower, horsepower per ton and horsepower per 1,000 pounds."><meta property="og:type" content="website"><meta property="og:url" content="https://garagemath.com/hp-weight.html">
+<link rel="stylesheet" href="style.css"></head><body><header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="guides.html">Guides</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header><main class="tool-shell"><div class="container"><div class="tool-head"><div class="kicker">PERFORMANCE TOOL</div><h1>Power-to-Weight Calculator</h1><p>Turn horsepower and vehicle weight into simple ratios that make very different cars easier to compare.</p></div><div class="calc"><div class="panel"><h2>Vehicle numbers</h2><div class="field"><label for="hp">Horsepower</label><input id="hp" type="number" value="400"></div><div class="field"><label for="weight">Vehicle weight (lb)</label><input id="weight" type="number" value="3600"></div><button onclick="calcHP()">Calculate ratio</button></div><div class="panel"><h2>Results</h2><div id="hpResults"><p class="note">Enter your numbers and calculate.</p></div></div></div><div class="content"><h2>Reading power-to-weight</h2><p>Lower pounds per horsepower means each horsepower has less vehicle mass to accelerate. Horsepower per ton expresses the same relationship from the opposite direction.</p><h2>Why the ratio is not a lap-time guarantee</h2><p>Traction, gearing, aerodynamics, torque curve, transmission behavior and driver inputs all matter. Power-to-weight is best treated as a quick comparison metric, not a full performance simulation.</p><div class="related"><a class="pill" href="power-to-weight-guide.html">Power-to-weight guide</a><a class="pill" href="quarter-mile.html">Quarter-mile estimator</a></div></div></div></main><footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div></div></footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+<script src="common.js"></script><script>function calcHP(){const h=+hp.value,w=+weight.value,el=document.getElementById('hpResults');if(h<=0||w<=0){el.innerHTML='<p class="note">Enter horsepower and weight above zero.</p>';return}el.innerHTML=`<div class="result"><span>Pounds per horsepower</span><strong>${num(w/h,2)} lb/hp</strong></div><div class="result"><span>Horsepower per US ton</span><strong>${num(h/(w/2000),1)} hp/ton</strong></div><div class="result"><span>Horsepower per 1,000 lb</span><strong>${num(h/(w/1000),1)} hp</strong></div>`;}calcHP();</script></body></html>

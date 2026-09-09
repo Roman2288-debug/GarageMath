@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="en"><head>
+<!doctype html><html lang="en"><head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SNZQW6YHW9"></script>
 <script>
@@ -9,26 +8,10 @@
   gtag('config', 'G-SNZQW6YHW9');
 </script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RPM & Speed Calculator | GarageMath</title><meta name="description" content="Estimate road speed from RPM, tire diameter, gear ratio and final drive.">
-<link rel="stylesheet" href="style.css"></head><body>
-<header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
-<main class="tool-shell"><div class="container">
-<div class="tool-head"><div class="kicker">GEARING TOOL</div><h1>RPM & Speed Calculator</h1><p>Estimate road speed from engine RPM, tire diameter, transmission ratio and final-drive ratio.</p></div>
-<div class="calc"><div class="panel"><h2>Drivetrain</h2>
-<div class="field"><label>Engine RPM</label><input id="rpm" type="number" value="2500"></div>
-<div class="field"><label>Tire diameter (in)</label><input id="dia" type="number" value="26" step=".01"></div>
-<div class="field"><label>Transmission gear ratio</label><input id="gear" type="number" value="0.75" step=".01"></div>
-<div class="field"><label>Final-drive ratio</label><input id="finaldrive" type="number" value="3.73" step=".01"></div>
-<button onclick="calcRPM()">Calculate speed</button></div><div class="panel"><h2>Results</h2><div id="rpmResults"></div></div></div>
-<div class="content"><h2>Formula</h2><p>Estimated MPH = RPM × tire diameter ÷ (gear ratio × final-drive ratio × 336). Real-world speed can differ because of tire growth, converter slip, clutch slip and measurement tolerances.</p></div></div></main>
-<footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div></footer>
-<script src="common.js"></script><script>
-function calcRPM(){
- const r=+rpm.value,d=+dia.value,g=+gear.value,f=+finaldrive.value,el=document.getElementById('rpmResults');
- if(r<0||d<=0||g<=0||f<=0){el.innerHTML='<p class="note">Enter valid drivetrain values.</p>';return}
- const mph=r*d/(g*f*336);
- el.innerHTML=`<div class="result"><span>Estimated road speed</span><strong>${num(mph,1)} mph</strong></div>
- <div class="result"><span>Overall ratio</span><strong>${num(g*f,3)}:1</strong></div>`;
-} calcRPM();
-</script><script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-</body></html>
+<title>RPM &amp; Speed Calculator | GarageMath</title>
+<meta name="description" content="Estimate road speed from RPM, tire diameter, transmission gear ratio and final-drive ratio.">
+<link rel="canonical" href="https://garagemath.com/rpm-speed.html">
+<meta property="og:title" content="RPM &amp; Speed Calculator | GarageMath"><meta property="og:description" content="Estimate road speed from RPM, tire diameter, transmission gear ratio and final-drive ratio."><meta property="og:type" content="website"><meta property="og:url" content="https://garagemath.com/rpm-speed.html">
+<link rel="stylesheet" href="style.css"></head><body><header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="guides.html">Guides</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header><main class="tool-shell"><div class="container"><div class="tool-head"><div class="kicker">GEARING TOOL</div><h1>RPM & Speed Calculator</h1><p>Estimate road speed from engine RPM, tire diameter, transmission ratio and final-drive ratio.</p></div><div class="calc"><div class="panel"><h2>Drivetrain</h2><div class="field"><label for="rpm">Engine RPM</label><input id="rpm" type="number" value="2500"></div><div class="field"><label for="dia">Tire diameter (in)</label><input id="dia" type="number" value="26" step=".01"></div><div class="field"><label for="gear">Transmission gear ratio</label><input id="gear" type="number" value="0.75" step=".01"></div><div class="field"><label for="finaldrive">Final-drive ratio</label><input id="finaldrive" type="number" value="3.73" step=".01"></div><div class="field"><label for="targetmph">Target road speed (mph)</label><input id="targetmph" type="number" value="70" step="1"></div><button onclick="calcRPM()">Calculate gearing</button></div><div class="panel"><h2>Results</h2><div id="rpmResults"><p class="note">Enter your numbers and calculate.</p></div></div></div><div class="content"><h2>Gearing formula</h2><div class="formula">MPH ≈ RPM × tire diameter ÷ (gear ratio × final drive × 336)</div><p>The constant 336 converts inches and minutes into miles per hour. The reverse calculation estimates engine RPM at a selected road speed.</p><h2>Why real RPM can differ</h2><p>Automatic transmission converter slip, clutch slip, tire growth and actual loaded tire diameter can move real-world results away from the theoretical number.</p><div class="related"><a class="pill" href="gear-ratio-guide.html">Gearing guide</a><a class="pill" href="tire-size.html">Tire size</a></div></div></div></main><footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="guides.html">Guides</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div></div></footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+<script src="common.js"></script><script>function calcRPM(){const r=+rpm.value,d=+dia.value,g=+gear.value,f=+finaldrive.value,t=+targetmph.value,el=document.getElementById('rpmResults');if(r<0||d<=0||g<=0||f<=0||t<0){el.innerHTML='<p class="note">Enter valid drivetrain values.</p>';return}const mph=r*d/(g*f*336),req=t*g*f*336/d;el.innerHTML=`<div class="result"><span>Speed at ${num(r,0)} RPM</span><strong>${num(mph,1)} mph</strong></div><div class="result"><span>RPM at ${num(t,0)} mph</span><strong>${num(req,0)} RPM</strong></div><div class="result"><span>Overall ratio</span><strong>${num(g*f,3)}:1</strong></div>`;}calcRPM();</script></body></html>
