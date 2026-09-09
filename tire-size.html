@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tire Size Calculator | GarageMath</title><meta name="description" content="Compare two tire sizes and calculate diameter, ride height and speedometer error.">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><div class="container nav"><a class="brand" href="index.html">Garage<span>Math</span></a><nav class="navlinks"><a href="index.html#tools">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></div></header>
+<main class="tool-shell"><div class="container">
+<div class="tool-head"><div class="kicker">TIRE TOOL</div><h1>Tire Size Calculator</h1><p>Compare two metric tire sizes and see the difference in overall diameter, circumference, ride height and indicated speed.</p></div>
+<div class="calc">
+<div class="panel"><h2>Enter tire sizes</h2>
+<div class="field"><label>Current tire</label><input id="old" value="225/45R17" placeholder="225/45R17"></div>
+<div class="field"><label>New tire</label><input id="new" value="245/40R18" placeholder="245/40R18"></div>
+<div class="field"><label>Speedometer reading (mph)</label><input id="mph" type="number" value="60" step="1"></div>
+<button onclick="calcTire()">Compare tires</button><p class="note">Format example: 225/45R17</p></div>
+<div class="panel"><h2>Results</h2><div id="tireResults"><p class="note">Enter both tire sizes and tap Compare tires.</p></div></div>
+</div>
+<div class="content"><h2>How it works</h2><p>A metric tire like 225/45R17 is 225 mm wide, its sidewall is 45% of that width, and it fits a 17-inch wheel. GarageMath converts the sidewall to inches and adds two sidewalls to the wheel diameter.</p><h3>Why diameter matters</h3><p>A larger overall diameter travels farther per revolution. That changes the relationship between indicated speed and actual road speed, and it also changes ride height by half the diameter difference.</p></div></div></main>
+<footer><div class="container footer-row"><div>© <span id="year"></span> GarageMath</div><div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div></footer>
+<script src="common.js"></script><script>
+function parseTire(s){
+ const m=s.trim().toUpperCase().match(/^(\d{3})\/(\d{2})R(\d{2})$/);
+ if(!m) return null;
+ const w=+m[1], ar=+m[2], rim=+m[3];
+ const side=(w*(ar/100))/25.4;
+ const dia=rim+2*side;
+ return {w,ar,rim,dia,circ:Math.PI*dia};
+}
+function calcTire(){
+ const a=parseTire(document.getElementById('old').value), b=parseTire(document.getElementById('new').value);
+ const mph=+document.getElementById('mph').value||60, el=document.getElementById('tireResults');
+ if(!a||!b){el.innerHTML='<p class="note">Use a format like 225/45R17.</p>';return}
+ const pct=(b.dia/a.dia-1)*100, actual=mph*(b.dia/a.dia), ride=(b.dia-a.dia)/2;
+ el.innerHTML=`<div class="result"><span>Current diameter</span><strong>${num(a.dia,2)} in</strong></div>
+ <div class="result"><span>New diameter</span><strong>${num(b.dia,2)} in</strong></div>
+ <div class="result"><span>Diameter change</span><strong>${pct>=0?'+':''}${num(pct,2)}%</strong></div>
+ <div class="result"><span>Ride-height change</span><strong>${ride>=0?'+':''}${num(ride,2)} in</strong></div>
+ <div class="result"><span>Actual speed at ${num(mph,0)} mph indicated</span><strong>${num(actual,1)} mph</strong></div>`;
+} calcTire();
+</script><script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body></html>
