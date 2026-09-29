@@ -1,0 +1,1 @@
+const intro=document.getElementById('intro');if(intro){const trigger=intro.querySelector('button');const play=()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;intro.classList.remove('is-playing');void intro.offsetWidth;intro.classList.add('is-playing');};trigger.addEventListener('click',play);play();}
