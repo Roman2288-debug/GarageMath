@@ -1,6 +1,6 @@
 @import url('v3-core.css?v=3.3.0');
 @import url('v3.3.css?v=3.3.0');
-@import url('v3.3-polish.css?v=3.3.0');
+@import url('v3.3-polish.css?v=3.3.1');
 
 /* Legacy wordmark support for older cached markup. */
 .brand-art{position:relative;display:inline-block;width:190px;height:42px;background:url('favicon.svg') left center/38px 38px no-repeat}.brand-art:before,.brand-art:after{position:absolute;top:50%;transform:translateY(-50%);font:900 1.45rem/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.02em}.brand-art:before{content:'GARAGE';left:48px;color:var(--text)}.brand-art:after{content:'MATH';left:105px;color:var(--red)}
