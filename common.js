@@ -92,5 +92,5 @@ document.querySelectorAll('a[href*=".html"]').forEach(a=>a.addEventListener('cli
   if(!fromCalc&&/(tire-size|wheel-offset|wheel-backspacing|rpm-speed|fuel-cost|hp-weight|engine-displacement|compression-ratio|quarter-mile|injector-size)\.html/.test(href))gmTrack('guide_to_calculator',{destination:href});
 }));
 
-if(!document.querySelector('link[rel="manifest"]')){const link=document.createElement('link');link.rel='manifest';link.href='manifest.webmanifest?v=3.3.0';document.head.appendChild(link)}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3.3.0').catch(()=>{}))}
+if(!document.querySelector('link[rel="manifest"]')){const link=document.createElement('link');link.rel='manifest';link.href='manifest.webmanifest?v=3.3.2';document.head.appendChild(link)}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3.3.2').catch(()=>{}))}
