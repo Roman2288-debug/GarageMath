@@ -1,4 +1,43 @@
 /* System appearance before common.js resolves the saved preference. */
 @media (prefers-color-scheme:light){html:not([data-theme]){color-scheme:light;--bg:#F3F1EA;--surface:#FFFFFF;--panel:#FFFFFF;--panel2:#E9EDF0;--line:#AEB8C1;--text:#101820;--muted:#394650;--steel:#5E6A74;--red:#B42318;--red-soft:#8E1C14;--good:#176B36;--warn:#765500;--shadow:0 16px 40px rgba(17,24,32,.12)}html:not([data-theme]) body{background:#F3F1EA;color:#101820}html:not([data-theme]) header{background:rgba(255,255,255,.96)}html:not([data-theme]) .hero-copy>p,html:not([data-theme]) .tool-head>p,html:not([data-theme]) .content p,html:not([data-theme]) .content li{color:#34414B}html:not([data-theme]) .panel,html:not([data-theme]) .content,html:not([data-theme]) .card,html:not([data-theme]) .feature-card,html:not([data-theme]) .guide-card{background:#FFFFFF}}
 .track-viz:after{content:'FINISH';right:0;bottom:7px;color:var(--steel);font:600 .62rem 'IBM Plex Mono',monospace;letter-spacing:.06em}
-@media(max-width:720px){.theme-switcher{width:100%;justify-content:space-between}.theme-choice{flex:1;min-height:38px}}
+@media(max-width:720px){
+  .theme-switcher{width:100%;justify-content:space-between}.theme-choice{flex:1;min-height:38px}
+
+  /* Mobile navigation should inherit the active appearance instead of staying dark. */
+  html[data-theme="light"] .navlinks{
+    background:#FFFFFF;
+    border-color:#B7C0C8;
+    box-shadow:0 18px 45px rgba(17,24,32,.16);
+  }
+  html[data-theme="light"] .navlinks a{
+    color:#26323B;
+    border-bottom:1px solid #E1E5E8;
+  }
+  html[data-theme="light"] .navlinks a:hover,
+  html[data-theme="light"] .navlinks a:focus-visible,
+  html[data-theme="light"] .navlinks a[aria-current="page"]{
+    color:#101820;
+    background:#F5F7F8;
+  }
+  html[data-theme="light"] .theme-switcher{
+    background:#F4F6F7;
+    border-color:#AEB8C1;
+  }
+  html[data-theme="light"] .theme-switcher span{color:#46525C}
+  html[data-theme="light"] .theme-choice{color:#26323B}
+  html[data-theme="light"] .theme-choice:hover,
+  html[data-theme="light"] .theme-choice:focus-visible{background:#E7EBEE}
+  html[data-theme="light"] .theme-choice[aria-pressed="true"]{
+    background:#B42318;
+    color:#FFFFFF;
+  }
+
+  /* Match the same readable light menu before JS resolves System mode. */
+  @media (prefers-color-scheme:light){
+    html:not([data-theme]) .navlinks{background:#FFFFFF;border-color:#B7C0C8;box-shadow:0 18px 45px rgba(17,24,32,.16)}
+    html:not([data-theme]) .navlinks a{color:#26323B;border-bottom:1px solid #E1E5E8}
+    html:not([data-theme]) .theme-switcher{background:#F4F6F7;border-color:#AEB8C1}
+    html:not([data-theme]) .theme-switcher span,html:not([data-theme]) .theme-choice{color:#26323B}
+  }
+}
