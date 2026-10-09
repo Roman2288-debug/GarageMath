@@ -32,3 +32,4 @@
 @media print{.guide-toc,.measurement-fields:not([open]){display:none}.detail-table table{min-width:0}.table-wrap{overflow:visible}.detail-table{break-inside:avoid}}
 /* Pills inherit the current theme, including result and related-guide links. */
 .pill{background:var(--panel2);color:var(--text)}
+.content table th{background:var(--panel2);color:var(--text)}

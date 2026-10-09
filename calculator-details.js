@@ -14,7 +14,7 @@
     if(type==='rpm'){
       const dia=n('dia'),gear=n('gear'),final=n('finaldrive'),alt=String(val('altfinal')||'').trim()===''?null:n('altfinal');
       const rows=[30,40,50,60,70,80].map(speed=>{const current=gm.rpmSpeed(0,dia,gear,final,speed).requiredRpm;return [`${speed} mph`,`${fmt(current,0)} RPM`,...(alt===null?[]:[`${fmt(gm.rpmSpeed(0,dia,gear,alt,speed).requiredRpm,0)} RPM`])]});
-      return table('Cruise RPM across road speeds',['Speed',`Current ${fmt(final,3)}:1`,...(alt===null?[]:[`Alternative ${fmt(alt,3)}:1`])],rows)+'<p class="note">Both columns use the same tire diameter and transmission gear. This models a locked mechanical relationship, not converter slip or fuel economy.</p>';
+      return table('Cruise RPM across road speeds',['Speed',`Current ${fmt(final,3)}:1`,...(alt===null?[]:[`Alternative ${fmt(alt,3)}:1`])],rows)+'<p class="note">The table holds tire diameter and transmission gear fixed for every final-drive ratio. This models a locked mechanical relationship, not converter slip or fuel economy.</p>';
     }
     if(type==='fuel'){
       const mpg=n('mpg'),price=n('price'),distance=n('distance'),annual=n('annual'),usd=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(x);
