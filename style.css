@@ -1,6 +1,6 @@
-@import url('v3-core.css?v=3.5.0');
-@import url('v3.3.css?v=3.5.0');
-@import url('v3.3-polish.css?v=3.5.0');
+@import url('v3-core.css?v=3.6.0');
+@import url('v3.3.css?v=3.6.0');
+@import url('v3.3-polish.css?v=3.6.0');
 
 /* Legacy wordmark support for older cached markup. */
 .brand-art{position:relative;display:inline-block;width:190px;height:42px;background:url('favicon.svg') left center/38px 38px no-repeat}.brand-art:before,.brand-art:after{position:absolute;top:50%;transform:translateY(-50%);font:900 1.45rem/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.02em}.brand-art:before{content:'GARAGE';left:48px;color:var(--text)}.brand-art:after{content:'MATH';left:105px;color:var(--red)}
@@ -33,3 +33,19 @@
 /* Pills inherit the current theme, including result and related-guide links. */
 .pill{background:var(--panel2);color:var(--text)}
 .content table th{background:var(--panel2);color:var(--text)}
+
+/* Long reference content and usable print records. */
+.content .formula{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.9rem;line-height:1.6}
+.content h3{margin-top:28px;line-height:1.25}
+.content li{margin-bottom:9px}.guide-group{margin-bottom:38px}.guide-group>h2{margin-bottom:18px}
+.guide-card h3{font-size:1.45rem;line-height:1.15;margin:10px 0}
+.toc{max-height:calc(100vh - 110px);overflow-y:auto}
+input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.print-inputs{display:none}
+@media print{
+ body[data-page="guide"] .content{display:block!important;background:white!important;color:black!important;border:0!important}
+ .toc{display:none!important}.content a{color:black!important}.content pre{white-space:pre-wrap}
+ .print-inputs{display:block!important;color:black!important;overflow-wrap:anywhere}.print-inputs pre{white-space:pre-wrap}
+ .result-type-row,.result-type,.detail-table td,.detail-table th,.detail-table caption{background:white!important;color:black!important}
+ .tool-head h1{color:black!important}.calc-visual-title{color:black!important}
+}

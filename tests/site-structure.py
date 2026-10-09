@@ -68,3 +68,17 @@ for path in Path('.').glob('sitemap*.xml'):
         assert target.stem != '404', (path, '404 in sitemap')
 
 print('Site links, anchors, metadata, structured data and sitemaps passed')
+
+# Editorial scope and the reviewed expansion structure must remain intact.
+import re
+guides = list(Path('docs/content').glob('*guide.md'))
+assert len(guides) == 14, 'expected fourteen maintained guide sources'
+for guide in guides:
+    words = re.findall(r"\b[\w]+\b", guide.read_text())
+    assert 1100 <= len(words) <= 1800, (guide, 'outside requested editorial range')
+for slug in ['tire-size','wheel-offset','wheel-backspacing','rpm-speed','compression-ratio','engine-displacement','injector-size','fuel-cost','hp-weight','quarter-mile','wheel-tire-setup']:
+    text = Path('docs/content/' + slug + '.md').read_text()
+    assert '## Worked example 1' in text and '## Worked example 2' in text, slug
+    faq = text.split('## Frequently asked questions')[1].split('\n## ')[0]
+    assert 6 <= len(re.findall(r'^### ', faq, re.M)) <= 8, (slug, 'FAQ count')
+print('Editorial inventory, examples and FAQ checks passed')

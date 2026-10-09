@@ -1,0 +1,22 @@
+const assert=require('node:assert/strict');
+const g=require('../calculations');
+const close=(actual,expected,tolerance=0.005)=>assert.ok(Math.abs(actual-expected)<tolerance,`${actual} ≠ ${expected}`);
+// Independently calculated reference answers used in published worked examples.
+let r=g.tireCompare('225/45R17','245/40R18',60);close(r.old.diameter*25.4,634.30);close(r.new.diameter*25.4,653.20);close(r.actualMph,61.78780);close(r.rideHeight*25.4,9.45);
+r=g.tireCompare('265/70R17','33x12.50R17',65);close(r.diameterPct,4.40957);close(r.actualMph,67.86622);
+r=g.wheelOffsetCompare(8,40,8,30);close(r.innerClearanceChange,10);close(r.outerPokeChange,10);
+r=g.wheelOffsetCompare(8,40,9,35);close(r.innerClearanceChange,-7.7);close(r.outerPokeChange,17.7);
+r=g.backspacing(8,25);close(r.nominal,4.98425);close(r.lipAdjusted,5.48425);
+r=g.backspacing(9,-12);close(r.nominal,4.02756);close(r.lipAdjusted,4.52756);
+r=g.rpmSpeed(2500,26,.70,3.73,70);close(r.requiredRpm,2361.95077);close(r.mph,74.09130);
+close(g.rpmSpeed(2500,28,.70,3.73,70).requiredRpm,2193.24);close(g.rpmSpeed(2500,26,.70,4.10,70).requiredRpm,2596.24615);
+close(g.displacement(86/25.4,86/25.4,4).totalCc,1998.2295);
+close(g.displacement(4,3.48,8).totalCi,349.84776);close(g.displacement(4.03,3.48,8).totalCi,355.11515);
+r=g.compressionRatio(4,3.48,64,5,4.1,.041,.020);close(r.ratio,9.74048);close(r.clearanceCc,81.98891);
+close(g.compressionRatio(4,3.48,72,5,4.1,.041,.020).ratio,8.96345);
+close(g.injectorSize(400,.50,8,80).lbHr,31.25);close(g.injectorSize(400,.65,8,75).lbHr,43.33333);
+close(g.fuelCost(300,25,3.50,12000).annualCost,1680);close(g.fuelCost(300,30,4,12000).annualCost,1600);
+close(g.powerToWeight(400,3600).lbPerHp,9);close(g.powerToWeight(400,3800).hpPerTon,210.52632);
+r=g.quarterMile(350,3500);close(r.et,12.54958);close(r.trapMph,108.61318);
+r=g.quarterMile(400,3500);close(r.et,12.00324);close(r.trapMph,113.55681);
+console.log('Published worked-example reference answers passed');

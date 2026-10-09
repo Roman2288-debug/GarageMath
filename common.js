@@ -1,17 +1,17 @@
 function money(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n)}
 function num(n,d=2){return Number(n).toLocaleString(undefined,{maximumFractionDigits:d})}
-function gmTrack(name,params={}){if(typeof gtag==='function')gtag('event',name,params)}
+function gmTrack(name,params={}){if(typeof gtag==='function')gtag('event',name,{...params,page_location:location.origin+location.pathname})}
 window.gmTrack=gmTrack;
 
 (()=>{
   const THEME_KEY='gm_theme_mode';
   const mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-  const getMode=()=>localStorage.getItem(THEME_KEY)||'system';
+  const getMode=()=>{try{return localStorage.getItem(THEME_KEY)||'system'}catch{return 'system'}};
   const resolved=mode=>mode==='system'?(mq&&mq.matches?'dark':'light'):mode;
   const updateThemeUi=mode=>document.querySelectorAll('[data-theme-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeChoice===mode)));
   function applyTheme(mode,persist=true){
     if(!['system','light','dark'].includes(mode))mode='system';
-    if(persist)localStorage.setItem(THEME_KEY,mode);
+    if(persist){try{localStorage.setItem(THEME_KEY,mode)}catch{}}
     const actual=resolved(mode);
     document.documentElement.dataset.theme=actual;
     document.documentElement.dataset.themeMode=mode;
@@ -39,7 +39,7 @@ if(nav){
     wrap.innerHTML='<span>Appearance</span>'+['system','light','dark'].map(x=>`<button class="theme-choice" type="button" data-theme-choice="${x}" aria-pressed="false">${x[0].toUpperCase()+x.slice(1)}</button>`).join('');
     nav.appendChild(wrap);
     wrap.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>{window.gmSetTheme(b.dataset.themeChoice);gmTrack('appearance_changed',{mode:b.dataset.themeChoice})}));
-    const mode=localStorage.getItem('gm_theme_mode')||'system';
+    let mode='system';try{mode=localStorage.getItem('gm_theme_mode')||'system'}catch{}
     wrap.querySelectorAll('[data-theme-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeChoice===mode)));
   }
 }
@@ -93,5 +93,5 @@ document.querySelectorAll('a[href*=".html"]').forEach(a=>a.addEventListener('cli
   if(!fromCalc&&/(tire-size|wheel-offset|wheel-backspacing|rpm-speed|fuel-cost|hp-weight|engine-displacement|compression-ratio|quarter-mile|injector-size)\.html/.test(href))gmTrack('guide_to_calculator',{destination:href});
 }));
 
-if(!document.querySelector('link[rel="manifest"]')){const link=document.createElement('link');link.rel='manifest';link.href='manifest.webmanifest?v=3.5.0';document.head.appendChild(link)}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3.5.0').catch(()=>{}))}
+if(!document.querySelector('link[rel="manifest"]')){const link=document.createElement('link');link.rel='manifest';link.href='manifest.webmanifest?v=3.6.0';document.head.appendChild(link)}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3.6.0').catch(()=>{}))}
