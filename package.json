@@ -1,1 +1,1 @@
-{"name":"garagemath","version":"3.4.0","private":true,"scripts":{"test":"node tests/calculations.test.js && node tests/calculator-page.test.js"}}
+{"name":"garagemath","version":"3.5.0","private":true,"scripts":{"test":"node tests/calculations.test.js && node tests/calculator-page.test.js && python3 tests/site-structure.py"}}

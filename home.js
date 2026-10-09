@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
   const search=document.getElementById('tool-search'),chips=[...document.querySelectorAll('[data-tool-filter]')],groups=[...document.querySelectorAll('[data-tool-group]')],cards=[...document.querySelectorAll('[data-tool-card]')],empty=document.getElementById('tool-empty');
   const icons={
+    'wheel-tire-setup.html':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/><path d="M8 5h8M8 19h8"/></svg>',
     'tire-size.html':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 4v4M12 16v4M4 12h4M16 12h4"/></svg>',
     'wheel-offset.html':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 18h16M8 6v12M16 6v12"/><path d="M12 9v6M10 11l2-2 2 2M10 13l2 2 2-2"/></svg>',
     'wheel-backspacing.html':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5v14M19 5v14M5 12h14"/><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg>',
@@ -16,8 +17,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   if(search&&cards.length){
     let active='all';
-    const apply=()=>{const query=search.value.trim().toLowerCase();let visible=0;groups.forEach(group=>{let groupVisible=0;group.querySelectorAll('[data-tool-card]').forEach(card=>{const hay=(card.dataset.search||card.innerText).toLowerCase(),category=card.dataset.category||'',show=(active==='all'||category===active)&&(!query||hay.includes(query));card.hidden=!show;if(show){visible++;groupVisible++}});group.hidden=groupVisible===0});empty.hidden=visible!==0;gmTrack('tool_finder_used',{filter:active,has_query:query?1:0})};
-    let timer;search.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(apply,120)});chips.forEach(chip=>chip.addEventListener('click',()=>{active=chip.dataset.toolFilter;chips.forEach(c=>c.classList.toggle('is-active',c===chip));apply()}));
+    const apply=()=>{const query=search.value.trim().toLowerCase();let visible=0;groups.forEach(group=>{let groupVisible=0;group.querySelectorAll('[data-tool-card]').forEach(card=>{const hay=(card.dataset.search||card.innerText).toLowerCase(),category=card.dataset.category||'',show=(active==='all'||category===active)&&(!query||hay.includes(query));card.hidden=!show;if(show){visible++;groupVisible++}});group.hidden=groupVisible===0});empty.hidden=visible!==0;const count=document.querySelector('.tool-count');if(count)count.textContent=visible+' calculator'+(visible===1?'':'s');gmTrack('tool_finder_used',{filter:active,has_query:query?1:0})};
+    chips.forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.toolFilter==='all')));
+    let timer;search.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(apply,120)});chips.forEach(chip=>chip.addEventListener('click',()=>{active=chip.dataset.toolFilter;chips.forEach(c=>{c.classList.toggle('is-active',c===chip);c.setAttribute('aria-pressed',String(c===chip))});apply()}));
   }
   document.querySelectorAll('[data-popular-tool]').forEach(a=>a.addEventListener('click',()=>gmTrack('popular_tool_clicked',{tool:a.dataset.popularTool})));
 

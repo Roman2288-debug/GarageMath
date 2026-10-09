@@ -7,3 +7,10 @@ near(gm.fuelCost(0,25,0,0).cost,0);
 near(gm.wheelOffsetCompare(8,40,8,40).innerClearanceChange,0);
 near(gm.compressionRatio(4,3.48,64,5,4.1,.041,.01).ratio,9.965662,0.00001);
 console.log('Invalid-input and comparison regression tests passed');
+
+const flotation=gm.parseTire('33x12.50R17');near(flotation.diameter,33);near(flotation.width,317.5);near(flotation.sidewall,8);
+near(gm.parseTire('LT 275/70 R18').diameter,33.157480315,1e-6);
+near(gm.parseTire('P225/45R17').diameter,a.diameter);
+for(const size of ['17x12.5R17','15x12.5R17','33x0R17','225/45R00'])assert.equal(gm.parseTire(size),null);
+near(gm.tireCompare('33x12.50R17','35x12.50R17',60).actualMph,63.6363636,1e-6);
+console.log('Metric and inch tire input tests passed');

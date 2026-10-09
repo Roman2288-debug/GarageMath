@@ -17,6 +17,7 @@ jobs:
           node --check common.js
           node --check calculations.js
           node --check calculator-page.js
+          node --check calculator-details.js
           node --check home.js
           node --check garage.js
           node --check sw.js
