@@ -30,3 +30,5 @@
 [aria-invalid="true"]{border-color:var(--red)!important}
 @media(max-width:480px){.setup-input-grid{grid-template-columns:1fr}.guide-toc{display:block}.guide-toc a{display:block;padding:8px 0}}
 @media print{.guide-toc,.measurement-fields:not([open]){display:none}.detail-table table{min-width:0}.table-wrap{overflow:visible}.detail-table{break-inside:avoid}}
+/* Pills inherit the current theme, including result and related-guide links. */
+.pill{background:var(--panel2);color:var(--text)}
