@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
   const type=document.body.dataset.calculator;if(!type||!window.GarageMathCore)return;
   const q=id=>document.getElementById(id),results=document.querySelector('[data-results]'),calcBtn=document.querySelector('[data-calculate]');
-  const val=id=>q(id)?.value,n=id=>+val(id);let userRun=false;
+  const val=id=>q(id)?.value,n=id=>String(val(id)??'').trim()===''?NaN:Number(val(id));let userRun=false;
   const meta={
     tire:{label:'Geometry calculation',next:'Verify the exact tire model’s published dimensions, load rating, wheel-width range and physical clearance.'},
     wheel:{label:'Geometry calculation',next:'Measure current strut and fender clearance, then check brake-spoke clearance and suspension travel.'},
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     injector:[['4 injectors',{injectors:'4'}],['6 injectors',{injectors:'6'}],['8 injectors',{injectors:'8'}]],
     power:[['Example: 400 hp / 3600 lb',{hp:'400',weight:'3600'}]],
     quarter:[['Example: 500 hp / 3600 lb',{qhp:'500',qweight:'3600'}]]
-  };if(!sets[type])return;const html=`<div class="preset-bar"><span class="preset-label">Quick examples / presets</span><div class="preset-actions">${sets[type].map((x,i)=>`<button type="button" data-preset-index="${i}">${x[0]}</button>`).join('')}</div></div>`;calcBtn.insertAdjacentHTML('beforebegin',html);panel.querySelectorAll('[data-preset-index]').forEach(b=>b.addEventListener('click',()=>{const values=sets[type][+b.dataset.presetIndex][1];Object.entries(values).forEach(([id,v])=>{if(q(id))q(id).value=v});f[type]?.();gmTrack('calculator_preset_used',{calculator:type,preset:+b.dataset.presetIndex})}))}
+  };if(!sets[type])return;const html=`<div class="preset-bar"><span class="preset-label">Quick examples / presets</span><div class="preset-actions">${sets[type].map((x,i)=>`<button type="button" data-preset-index="${i}">${x[0]}</button>`).join('')}</div></div>`;calcBtn.insertAdjacentHTML('beforebegin',html);panel.querySelectorAll('[data-preset-index]').forEach(b=>b.addEventListener('click',()=>{const values=sets[type][+b.dataset.presetIndex][1];Object.entries(values).forEach(([id,v])=>{if(q(id))q(id).value=v});run();gmTrack('calculator_preset_used',{calculator:type,preset:+b.dataset.presetIndex})}))}
   function tireVisual(r){const base=118,ratio=r.new.diameter/r.old.diameter,newSize=Math.max(92,Math.min(148,base*ratio));return `<div class="calc-visual"><div class="calc-visual-title"><span>Visual comparison</span><span>Nominal diameter</span></div><div class="tire-viz"><div class="tire-viz-col"><div class="tire-ring" style="--size:${base}px"><span>${num(r.old.diameter,2)}&quot;</span></div><small>${escapeHtml(val('old'))}</small></div><div class="tire-viz-col"><div class="tire-ring new" style="--size:${newSize}px"><span>${num(r.new.diameter,2)}&quot;</span></div><small>${escapeHtml(val('new'))}</small></div></div></div>`}
   function wheelVisual(){const oldW=n('w1')*25.4,newW=n('w2')*25.4,oldInner=-(oldW/2+n('o1')),oldOuter=oldW/2-n('o1'),newInner=-(newW/2+n('o2')),newOuter=newW/2-n('o2'),low=Math.min(oldInner,newInner,0),high=Math.max(oldOuter,newOuter,0),pad=(high-low)*.12+8,min=low-pad,max=high+pad,map=x=>5+90*((x-min)/(max-min)),oldL=map(oldInner),oldR=map(oldOuter),newL=map(newInner),newR=map(newOuter),hub=map(0);return `<div class="calc-visual"><div class="calc-visual-title"><span>Wheel position</span><span>Hub face reference</span></div><div class="wheel-viz"><div class="wheel-track"><div class="wheel-hub-line" style="--hub:${hub}%"></div><div class="wheel-bar current" style="--left:${oldL}%;--width:${oldR-oldL}%"><span>Current</span></div><div class="wheel-bar new" style="--left:${newL}%;--width:${newR-newL}%"><span>New</span></div></div><div class="wheel-labels"><span>← suspension</span><span>fender →</span></div></div></div>`}
   function rpmVisual(r){return `<div class="calc-visual"><div class="calc-visual-title"><span>Gearing snapshot</span><span>Theoretical</span></div><div class="speed-strip"><div class="speed-node"><strong>${num(n('rpm'),0)} RPM</strong><span>entered engine speed</span></div><div class="speed-arrow">→</div><div class="speed-node"><strong>${num(r.mph,1)} mph</strong><span>calculated road speed</span></div></div><div class="ratio-callout"><span>At ${num(n('targetmph'),0)} mph</span><strong>${num(r.requiredRpm,0)} RPM</strong></div></div>`}
@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     injector(){if(n('ihp')<=0||n('bsfc')<=0||n('injectors')<=0||n('duty')<=0||n('duty')>100)return fail('Horsepower, BSFC and injector count must be above zero; duty cycle must be between 1% and 100%.',['ihp','bsfc','injectors','duty']);const r=GarageMathCore.injectorSize(n('ihp'),n('bsfc'),n('injectors'),n('duty'));setResults([['Required injector flow',`${num(r.lbHr,1)} lb/hr each`],['Approx. gasoline flow',`${num(r.ccMinApprox,0)} cc/min each`],['Total fuel mass flow',`${num(r.totalLbHr,1)} lb/hr`]],done(`Using the entered BSFC and duty-cycle assumptions, the planning minimum is about ${num(r.lbHr,1)} lb/hr per injector. Verify manufacturer flow data, pressure differential and fuel properties before selecting hardware.`),injectorVisual(r),`${num(n('ihp'),0)} hp × ${n('bsfc')} BSFC ÷ (${n('injectors')} injectors × ${num(n('duty')/100,2)} duty) = ${num(r.lbHr,1)} lb/hr each.`)}
   };
   restoreUrl();applyActiveVehicle();addHints();addPresets();
-  calcBtn?.addEventListener('click',()=>{userRun=true;gmTrack('calculator_started',{calculator:type});f[type]?.();userRun=false});
-  f[type]?.();
+  function run(){
+    const invalid=Array.from(document.querySelectorAll('.calc input[type="number"]')).filter(el=>!Number.isFinite(n(el.id)));
+    if(invalid.length)return fail('Enter a finite number in each numeric field. Enter 0 where zero is intended.',invalid.map(el=>el.id));
+    if(type==='displacement'&&!Number.isInteger(n('cyl')))return fail('Cylinder count must be a whole number.',['cyl']);
+    if(type==='injector'&&!Number.isInteger(n('injectors')))return fail('Injector count must be a whole number.',['injectors']);
+    try{f[type]?.()}catch(e){fail(e.message||'Check the entered values.')}
+  }
+  results.setAttribute('aria-live','polite');
+  calcBtn?.addEventListener('click',()=>{userRun=true;gmTrack('calculator_started',{calculator:type});run();userRun=false});
+  document.querySelector('.calc')?.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input')){e.preventDefault();calcBtn?.click()}});
+  run();
 });

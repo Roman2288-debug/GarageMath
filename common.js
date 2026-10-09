@@ -47,7 +47,8 @@ if(navToggle&&nav){
   navToggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');navToggle.setAttribute('aria-expanded',String(open))});
   nav.addEventListener('click',e=>{if(e.target.closest('a')){nav.classList.remove('is-open');navToggle.setAttribute('aria-expanded','false')}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('is-open');navToggle.setAttribute('aria-expanded','false')}});
-  const current=location.pathname.split('/').pop()||'index.html';
+  const slug=location.pathname.split('/').pop()||'index';
+  const current=slug.endsWith('.html')?slug:slug+'.html';
   nav.querySelectorAll('a').forEach(a=>{const href=a.getAttribute('href')||'';if(href===current||(current==='index.html'&&href==='index.html#tools'))a.setAttribute('aria-current','page')});
 }
 
@@ -92,5 +93,5 @@ document.querySelectorAll('a[href*=".html"]').forEach(a=>a.addEventListener('cli
   if(!fromCalc&&/(tire-size|wheel-offset|wheel-backspacing|rpm-speed|fuel-cost|hp-weight|engine-displacement|compression-ratio|quarter-mile|injector-size)\.html/.test(href))gmTrack('guide_to_calculator',{destination:href});
 }));
 
-if(!document.querySelector('link[rel="manifest"]')){const link=document.createElement('link');link.rel='manifest';link.href='manifest.webmanifest?v=3.3.2';document.head.appendChild(link)}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3.3.2').catch(()=>{}))}
+if(!document.querySelector('link[rel="manifest"]')){const link=document.createElement('link');link.rel='manifest';link.href='manifest.webmanifest?v=3.4.0';document.head.appendChild(link)}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js?v=3.4.0').catch(()=>{}))}
